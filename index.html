@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Nomad mimemail by developarts</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Nomad mimemail</h1>
+        <p>Nomad Mime Mail</p>
+        <p class="view"><a href="https://github.com/developarts/nomad_mimemail">View the Project on GitHub <small>developarts/nomad_mimemail</small></a></p>
+        <ul>
+          <li><a href="https://github.com/developarts/nomad_mimemail/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/developarts/nomad_mimemail/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/developarts/nomad_mimemail">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Nomad MIME Mail</h1>
+
+<h2>Description.</h2>
+
+<p>Nomad MIME Mail, is a PHP class for handling and sending mail MIME type, with support for the dispatch by SMTP and SMTP Auth</p>
+
+<p>Currently, this class supports:</p>
+
+<ul>
+<li>Plain Text</li>
+<li>HTML</li>
+<li>Plain Text with Attachments</li>
+<li>HTML with Attachments</li>
+<li>HTML with Embedded Images</li>
+<li>HTML with Attachments and Embedded Images</li>
+</ul><p>It also supports multiple e-mail addresses for sending (to), with a copy (cc) and with a blind carbon copy (bcc), as well as several images embedded in HTML and various attachments</p>
+
+<h2>Quick Reference.</h2>
+
+<p>Attached to this class and documentation is a file called 'nomad_mimemail.test.php' where is a script with an example of sending mail with text, HTML, Image and Deputy Embedded sent via SMTP. .</p>
+
+<p>To use MIME Mail Nomad is necessary to declare the object as follows:</p>
+
+<div class="highlight"><pre><span class="k">include</span> <span class="p">(</span><span class="s1">'nomad_mimemail.inc.php'</span><span class="p">);</span>
+<span class="nv">$mimemail</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nomad_mimemail</span><span class="p">();</span>
+</pre></div>
+
+<h3>Plain Text.</h3>
+
+<p>Normally this is how the function 'mail ()' would operate. PHP, however in this version is created so a little different because it sent the body of the message headers and MIME type</p>
+
+<div class="highlight"><pre><span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_from</span><span class="p">(</span><span class="s2">"me@mail.com"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_to</span><span class="p">(</span><span class="s2">"friend@mail.com"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_subject</span><span class="p">(</span><span class="s2">"Nomad MIME Mail: Plain Text"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_text</span><span class="p">(</span><span class="s2">"This is a MIME Mail with:</span><span class="se">\n\n</span><span class="s2">- Plain Text"</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"The MIME Mail has been sent"</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"An error has occurred, mail was not sent"</span><span class="p">;</span>
+<span class="p">}</span> 
+</pre></div>
+
+<h3>Plain Text and HTML.</h3>
+
+<p>Example of sending mail with text and HTML</p>
+
+<div class="highlight"><pre><span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_from</span><span class="p">(</span><span class="s2">"me@mail.com"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_to</span><span class="p">(</span><span class="s2">"friend@mail.com"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_subject</span><span class="p">(</span><span class="s2">"Nomad MIME Mail: Plain Text + HTML"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_text</span><span class="p">(</span><span class="s2">"This is a MIME Mail with:</span><span class="se">\n\n</span><span class="s2">- Plain Text</span><span class="se">\n</span><span class="s2">- HTML"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_html</span><span class="p">(</span><span class="s2">"&lt;HTML&gt;&lt;HEAD&gt;&lt;/HEAD&gt;&lt;BODY&gt;This is a &lt;b&gt;MIME&lt;/b&gt; Mail with:&lt;BR&gt;&lt;BR&gt;- Plain Text&lt;/BR&gt;- HTML&lt;/BODY&gt;&lt;/HTML&gt;"</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"The MIME Mail has been sent"</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"An error has occurred, mail was not sent"</span><span class="p">;</span>
+<span class="p">}</span> 
+</pre></div>
+
+<h3>Plain Text with Attachments.</h3>
+
+<p>Example of creating an email with an attachment and Plain Text. You can do more than adding attachments with the 'add_attachment' method. For more information, check the function reference guide.</p>
+
+<div class="highlight"><pre><span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_from</span><span class="p">(</span><span class="s2">"me@mail.com"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_to</span><span class="p">(</span><span class="s2">"friend@mail.com"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_subject</span><span class="p">(</span><span class="s2">"Nomad MIME Mail: Plain Text + Attachment"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_text</span><span class="p">(</span><span class="s2">"This is a MIME Mail with:</span><span class="se">\n\n</span><span class="s2">- Plain Text</span><span class="se">\n</span><span class="s2">- Attachment"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">add_attachment</span><span class="p">(</span><span class="s2">"test_attachment.tar.gz"</span><span class="p">,</span> <span class="s2">"file.tar.gz"</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"The MIME Mail has been sent"</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"An error has occurred, mail was not sent"</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>Plain Text and HTML with Attachments</h3>
+
+<p>Example to create an email with Plain Text, HTML and a deputy. You can add more than one attachment using the 'add_attachment'.</p>
+
+<div class="highlight"><pre><span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_from</span><span class="p">(</span><span class="s2">"me@mail.com"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_to</span><span class="p">(</span><span class="s2">"friend@mail.com"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_subject</span><span class="p">(</span><span class="s2">"Nomad MIME Mail: Plain Text + HTML + Attachment"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_text</span><span class="p">(</span><span class="s2">"This is a MIME Mail with:</span><span class="se">\n\n</span><span class="s2">- Plain Text</span><span class="se">\n</span><span class="s2">- HTML</span><span class="se">\n</span><span class="s2">- Attachment"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_html</span><span class="p">(</span><span class="s2">"&lt;HTML&gt;&lt;HEAD&gt;&lt;/HEAD&gt;&lt;BODY&gt;This is a &lt;b&gt;MIME&lt;/b&gt; Mail with:&lt;BR&gt;&lt;BR&gt;- Plain Text&lt;/BR&gt;- HTML&lt;/BR&gt;- Attachment&lt;/BODY&gt;&lt;/HTML&gt;"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">add_attachment</span><span class="p">(</span><span class="s2">"test_attachment.tar.gz"</span><span class="p">,</span> <span class="s2">"file.tar.gz"</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"The MIME Mail has been sent"</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"An error has occurred, mail was not sent"</span><span class="p">;</span>
+<span class="p">}</span> 
+</pre></div>
+
+<h3>Plain Text and HTML with Embedded Images</h3>
+
+<p>Example of creating an email with HTML, plain text and an Embedded Image. For the image embedded function, the attachment must have the same name as indicated on the tag 'IMG' HTML message.</p>
+
+<div class="highlight"><pre><span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_from</span><span class="p">(</span><span class="s2">"me@mail.com"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_to</span><span class="p">(</span><span class="s2">"friend@mail.com"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_subject</span><span class="p">(</span><span class="s2">"Nomad MIME Mail: Plain Text + HTML + Embedded Image"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_text</span><span class="p">(</span><span class="s2">"This is a MIME Mail with:</span><span class="se">\n\n</span><span class="s2">- Plain Text</span><span class="se">\n</span><span class="s2">- HTML</span><span class="se">\n</span><span class="s2">- Embedded Image"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_html</span><span class="p">(</span><span class="s2">"&lt;HTML&gt;&lt;HEAD&gt;&lt;/HEAD&gt;&lt;BODY&gt;This is a &lt;b&gt;MIME&lt;/b&gt; Mail with:&lt;BR&gt;&lt;BR&gt;- Plain Text&lt;/BR&gt;- HTML&lt;/BR&gt;- Embedded Image&lt;/BR&gt;&lt;/BR&gt;&lt;img src='image.gif' border='0'&gt;&lt;/BODY&gt;&lt;/HTML&gt;"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">add_attachment</span><span class="p">(</span><span class="s2">"test_image.gif"</span><span class="p">,</span> <span class="s2">"image.gif"</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"The MIME Mail has been sent"</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"An error has occurred, mail was not sent"</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>Plain Text and HTML with Embedded Image and Attachments</h3>
+
+<p>Example of creating an email with HTML, plain text, an embedded image and an attachment. For the embedded image to work, the attachment archive must have the same name as indicated on the tag 'IMG'</p>
+
+<div class="highlight"><pre><span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_from</span><span class="p">(</span><span class="s2">"me@mail.com"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_to</span><span class="p">(</span><span class="s2">"friend@mail.com"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_subject</span><span class="p">(</span><span class="s2">"Nomad MIME Mail: Plain Text + HTML + Embedded Image + Attachment"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_text</span><span class="p">(</span><span class="s2">"This is a MIME Mail with:</span><span class="se">\n\n</span><span class="s2">- Plain Text</span><span class="se">\n</span><span class="s2">- HTML</span><span class="se">\n</span><span class="s2">- Embedded Image</span><span class="se">\n</span><span class="s2">- Attachment"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_html</span><span class="p">(</span><span class="s2">"&lt;HTML&gt;&lt;HEAD&gt;&lt;/HEAD&gt;&lt;BODY&gt;This is a &lt;b&gt;MIME&lt;/b&gt; Mail with:&lt;BR&gt;&lt;BR&gt;- Plain Text&lt;/BR&gt;- HTML&lt;/BR&gt;- Embedded Image&lt;/BR&gt;- Attachment&lt;/BR&gt;&lt;/BR&gt;&lt;img src='image.gif' border='0'&gt;&lt;/BODY&gt;&lt;/HTML&gt;"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">add_attachment</span><span class="p">(</span><span class="s2">"test_image"</span><span class="p">,</span> <span class="s2">"image.gif"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">add_attachment</span><span class="p">(</span><span class="s2">"test_attachment.tar.gz"</span><span class="p">,</span> <span class="s2">"file.tar.gz"</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"The MIME Mail has been sent"</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"An error has occurred, mail was not sent"</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>Sending Authenticated SMTP</h3>
+
+<p>To send mail via SMTP it is necessary to call the 'set_smtp_host' method and to send mail using SMTP authentication it is necessary to use the 'set_smtp_auth' method. </p>
+
+<div class="highlight"><pre><span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_from</span><span class="p">(</span><span class="s2">"me@mail.com"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_to</span><span class="p">(</span><span class="s2">"friend@mail.com"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_subject</span><span class="p">(</span><span class="s2">"Nomad MIME Mail: HTML + Auth SMTP"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_html</span><span class="p">(</span><span class="s2">"&lt;HTML&gt;&lt;HEAD&gt;&lt;/HEAD&gt;&lt;BODY&gt;This is a &lt;b&gt;MIME&lt;/b&gt; Mail with:&lt;BR&gt;&lt;BR&gt;- Plain Text&lt;/BR&gt;- HTML&lt;/BODY&gt;&lt;/HTML&gt;"</span><span class="p">);</span>
+
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_smtp_host</span><span class="p">(</span><span class="s2">"domain.com"</span><span class="p">);</span>
+<span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_smtp_auth</span><span class="p">(</span><span class="s2">"user"</span><span class="p">,</span> <span class="s2">"pass"</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"The MIME Mail has been sent"</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"An error has occurred, mail was not sent"</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>At the moment this version is in testing and would appreciate any assistance possible to support such a large amount of SMTP's. If you have a mistake is possible to review the entire conversation that makes this script with SMTP. to do so before the 'send' call to the function 'set_smtp_log' a true, and the verdict can bring everything through 'get_smtp_log' as illustrated below:</p>
+
+<div class="highlight"><pre><span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">set_smtp_log</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"The MIME Mail has been sent"</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="nv">$mimemail</span><span class="o">-&gt;</span><span class="na">get_smtp_log</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>If so, I ask you to leave your report in The Forum where this kind of try to adapt as much as possible the response received from SMTP.</p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/developarts">developarts</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
