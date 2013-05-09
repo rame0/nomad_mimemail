@@ -997,9 +997,9 @@ class nomad_mimemail
 	{
 		if ($this->attachments_index != 0){
 			foreach($this->attachments as $key => $value){
-				if (preg_match('/(css|image)/i', $value['type']) && preg_match('/\s(background|href|src)\s*=\s*[\"|\'](' . $value['name'] . ')[\"|\'].*>/is', $this->mail_html)) {
+				if (preg_match('/(css|image)/i', $value['type']) && preg_match('~\s(background|href|src)\s*=\s*[\"|\'](' . $value['name'] . ')[\"|\']~is', $this->mail_html)) {
 					$img_id = md5($value['name']) . ".nomad@mimemail";
-					$this->mail_html = preg_replace('/\s(background|href|src)\s*=\s*[\"|\'](' . $value['name'] . ')[\"|\']/is', ' \\1="cid:' . $img_id . '"', $this->mail_html);
+					$this->mail_html = preg_replace('~\s(background|href|src)\s*=\s*[\"|\'](' . $value['name'] . ')[\"|\']~is', ' \\1="cid:' . $img_id . '"', $this->mail_html);
 					$this->attachments[$key]['embedded'] = $img_id;
 					$this->attachments_img[] = $value['name'];
 				}
